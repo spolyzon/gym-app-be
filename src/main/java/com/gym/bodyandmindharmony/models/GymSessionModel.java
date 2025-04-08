@@ -2,15 +2,17 @@ package com.gym.bodyandmindharmony.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
 
-@RequiredArgsConstructor
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @EqualsAndHashCode
 @ToString
 @Schema(
@@ -22,17 +24,17 @@ public class GymSessionModel implements Model {
     @Schema(
             description = "The unique session id."
     )
-    private final String id;
+    private String id;
 
     @JsonProperty("date")
     @Schema(
             description = "The date of the session.", format = "date"
     )
-    private final LocalDate date;
+    private LocalDate date;
 
     @JsonProperty("type")
     @Schema(
             description = "The type of the Session."
     )
-    private final String type;
+    private String type;
 }

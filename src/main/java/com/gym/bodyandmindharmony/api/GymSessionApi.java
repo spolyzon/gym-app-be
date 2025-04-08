@@ -1,6 +1,7 @@
 package com.gym.bodyandmindharmony.api;
 
 import com.gym.bodyandmindharmony.models.GymSessionModel;
+import com.gym.bodyandmindharmony.models.NewGymSessionModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,8 +32,25 @@ public interface GymSessionApi {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Something went wrong while retrieving Gym Sessions"
+                    description = "Something went wrong while retrieving Gym Sessions",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE
+                    )
             )
     })
     ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions();
+
+    @Operation(summary = "Creates a new Gym Session")
+    @ApiResponses(value = {
+                  @ApiResponse(
+                          responseCode = "201",
+                          description = "New Gym Session successfully created.",
+                          content = @Content(
+                                  mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                  schema = @Schema(implementation = GymSessionModel.class)
+                          )
+                  )
+            }
+    )
+    ResponseEntity<GymSessionModel> createNewGymSession(NewGymSessionModel newGymSessionModel);
 }
