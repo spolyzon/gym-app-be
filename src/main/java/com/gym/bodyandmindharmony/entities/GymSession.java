@@ -31,6 +31,9 @@ public class GymSession {
     @Column(name = "GYM_SESSION_ID")
     private String id;
 
+    @Column(name = "SESSION_TYPE")
+    private String type;
+
     @Column(name = "START_TIME")
     private LocalDateTime startTime;
 

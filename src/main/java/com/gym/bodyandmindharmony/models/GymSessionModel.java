@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,15 +27,17 @@ public class GymSessionModel implements Model {
     )
     private String id;
 
-    @JsonProperty("date")
-    @Schema(
-            description = "The date of the session.", format = "date"
-    )
-    private LocalDate date;
-
     @JsonProperty("type")
     @Schema(
             description = "The type of the Session."
     )
     private String type;
+
+    @JsonProperty("date")
+    @Schema(
+            description = "The date of the session.", format = "date"
+    )
+    private LocalDateTime startTime;
+
+    private LocalDateTime finishTime;
 }
