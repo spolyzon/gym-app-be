@@ -33,14 +33,25 @@ public class GymSessionImpl implements IGymSession {
     }
 
     @Override
-    public GymSession createNewGymSession(NewGymSessionModel newGymSessionModel) {
+    public GymSession createNewGymSession(NewGymSessionModel newGymSessionModel, String username) {
         GymSession gymSession = new GymSession();
 
         gymSession.setId(UUID.randomUUID().toString());
+        gymSession.setType(newGymSessionModel.getType());
         gymSession.setStartTime(LocalDateTime.now());
         gymSession.setFinishTime(LocalDateTime.now());
-//        gymSession.setClient(UUID.randomUUID().toString());
+        gymSession.setClient(getClient(username));
 
         return gymSessionRepository.saveAndFlush(gymSession);
+    }
+
+    private Client getClient(String username) {
+        final var optionalClient = clientRepository.findById(username);
+
+        if (optionalClient.isEmpty()){
+            final var client = new Client(username, LocalDateTime.now());
+            return clientRepository.saveAndFlush(client);
+        }
+        return optionalClient.get();
     }
 }

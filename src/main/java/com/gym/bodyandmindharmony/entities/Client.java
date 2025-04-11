@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -35,4 +36,7 @@ public class Client {
     )
     private List<GymSession> gymSessions;
 
+    public Client(String clientId, LocalDateTime createdAt) {
+        this(clientId, createdAt, Collections.emptyList());
+    }
 }

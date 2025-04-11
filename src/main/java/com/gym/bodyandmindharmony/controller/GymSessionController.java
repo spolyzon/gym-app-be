@@ -40,8 +40,9 @@ public class GymSessionController implements GymSessionApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<GymSessionModel> createNewGymSession(@RequestBody NewGymSessionModel newGymSessionModel) {
-        final var persistedGymSession = gymSessionService.createNewGymSession(newGymSessionModel);
+    public ResponseEntity<GymSessionModel> createNewGymSession(@RequestBody NewGymSessionModel newGymSessionModel,
+                                                               @RequestParam String username) {
+        final var persistedGymSession = gymSessionService.createNewGymSession(newGymSessionModel, username);
         final var model = mapper.mapToModel(persistedGymSession);
 
         return ResponseEntity.status(201).body(model);
