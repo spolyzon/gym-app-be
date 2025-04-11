@@ -6,11 +6,13 @@ import com.gym.bodyandmindharmony.models.GymSessionModel;
 import com.gym.bodyandmindharmony.models.NewGymSessionModel;
 import com.gym.bodyandmindharmony.service.IGymSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,8 +28,10 @@ public class GymSessionController implements GymSessionApi {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions() {
-        final var gymSessions = gymSessionService.getAllGymSessions()
+    public ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions(@RequestParam String username) {
+        if (StringUtils.isEmpty(username)) return ResponseEntity.ok(null);
+
+        final var gymSessions = gymSessionService.getAllGymSessionsByUser(username)
                 .stream()
                 .map(mapper::mapToModel)
                 .collect(Collectors.toList());

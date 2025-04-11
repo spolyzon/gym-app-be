@@ -38,7 +38,7 @@ public interface GymSessionApi {
                     )
             )
     })
-    ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions();
+    ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions(String username);
 
     @Operation(summary = "Creates a new Gym Session")
     @ApiResponses(value = {

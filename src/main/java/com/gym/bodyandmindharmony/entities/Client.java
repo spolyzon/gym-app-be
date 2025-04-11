@@ -10,10 +10,9 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,20 +21,18 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "GYM_SESSION")
-public class GymSession {
+public class Client {
 
     @Id
-    @Column(name = "GYM_SESSION_ID")
-    private String id;
+    @Column(name = "CLIENT_ID")
+    private String clientId;
 
-    @Column(name = "START_TIME")
-    private LocalDateTime startTime;
+    @Column(name = "CREATED_AT")
+    private LocalDateTime createdAt;
 
-    @Column(name = "FINISH_TIME")
-    private LocalDateTime finishTime;
+    @OneToMany(
+            mappedBy = "client"
+    )
+    private List<GymSession> gymSessions;
 
-    @ManyToOne
-    @JoinColumn(name = "CLIENT_ID")
-    private Client client;
 }
