@@ -12,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,4 +40,9 @@ public class GymSession {
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
+
+    @OneToMany(
+            mappedBy = "exerciseId"
+    )
+    private List<Exercise> exerciseList;
 }
