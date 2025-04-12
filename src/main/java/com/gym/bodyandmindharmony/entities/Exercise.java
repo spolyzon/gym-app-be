@@ -18,7 +18,9 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
+@ToString(
+        exclude = {"gymSession"}
+)
 @Entity
 public class Exercise {
 

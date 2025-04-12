@@ -7,14 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,7 +25,9 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
+@ToString(
+        exclude = {"client"}
+)
 @Entity
 @Table(name = "GYM_SESSION")
 public class GymSession {
@@ -45,7 +50,9 @@ public class GymSession {
     private Client client;
 
     @OneToMany(
-            mappedBy = "exerciseId"
+            mappedBy = "gymSession",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
     private List<Exercise> exerciseList;
 }
