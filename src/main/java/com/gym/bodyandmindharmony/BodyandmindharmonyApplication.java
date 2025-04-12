@@ -32,22 +32,23 @@ public class BodyandmindharmonyApplication {
 			clientRepository.saveAll(List.of(spyros, test));
 
 			GymSession session1 = new GymSession(UUID.randomUUID().toString(), "push", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
-			GymSession session2 = new GymSession(UUID.randomUUID().toString(), "pull", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
-			GymSession session3 = new GymSession(UUID.randomUUID().toString(), "legs", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
-			GymSession session4 = new GymSession(UUID.randomUUID().toString(), "kykliko", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
-			GymSession session5 = new GymSession(UUID.randomUUID().toString(), "push", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
-			GymSession session6 = new GymSession(UUID.randomUUID().toString(), "pull", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
-			GymSession session7 = new GymSession(UUID.randomUUID().toString(), "legs", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
-			gymSessionRepository.saveAll(List.of(session1, session2, session3, session4, session5, session6, session7));
+//			GymSession session2 = new GymSession(UUID.randomUUID().toString(), "pull", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
+//			GymSession session3 = new GymSession(UUID.randomUUID().toString(), "legs", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
+//			GymSession session4 = new GymSession(UUID.randomUUID().toString(), "kykliko", LocalDateTime.now(), LocalDateTime.now(), spyros, new ArrayList<>(10));
+//			GymSession session5 = new GymSession(UUID.randomUUID().toString(), "push", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
+//			GymSession session6 = new GymSession(UUID.randomUUID().toString(), "pull", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
+//			GymSession session7 = new GymSession(UUID.randomUUID().toString(), "legs", LocalDateTime.now(), LocalDateTime.now(), test, new ArrayList<>(10));
+//			gymSessionRepository.saveAll(List.of(session1, session2, session3, session4, session5, session6, session7));
+			gymSessionRepository.saveAll(List.of(session1));
 
 			Exercise ex1 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
-			Exercise ex2 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
-			Exercise ex3 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
-			Exercise ex4 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
-			Exercise ex5 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
-			Exercise ex6 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
+//			Exercise ex2 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
+//			Exercise ex3 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
+//			Exercise ex4 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
+//			Exercise ex5 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
+//			Exercise ex6 = new Exercise(UUID.randomUUID().toString(), "Bench press", 2, 1.2, session1);
 
-			exerciseRepository.saveAll(List.of(ex1, ex2, ex3, ex4, ex5, ex6));
+			exerciseRepository.saveAll(List.of(ex1));
 		};
 	}
 }

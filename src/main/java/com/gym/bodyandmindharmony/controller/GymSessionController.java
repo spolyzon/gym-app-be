@@ -28,7 +28,7 @@ public class GymSessionController implements GymSessionApi {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions(@RequestParam String username) {
+    public ResponseEntity<List<GymSessionModel>> retrieveGymSessions(@RequestParam String username) {
         if (StringUtils.isEmpty(username)) return ResponseEntity.ok(null);
 
         final var gymSessions = gymSessionService.getAllGymSessionsByUser(username)
