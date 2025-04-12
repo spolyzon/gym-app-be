@@ -9,4 +9,6 @@ public interface IGymSessionExercise {
     List<Exercise> getAllExercises(String gymSessionId);
 
     void addExercise(String gymSessionId, Exercise newExercise);
+
+    void updateExercise(String gymSessionId, Exercise updateExercise);
 }

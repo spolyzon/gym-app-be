@@ -31,10 +31,10 @@ public class Exercise {
     private String name;
 
     @Column(name = "REPETITIONS")
-    private int repetitions;
+    private Integer repetitions;
 
     @Column(name = "WEIGHT")
-    private double weight;
+    private Double weight;
 
     @ManyToOne
     @JoinColumn(name = "GYM_SESSION_ID")

@@ -3,6 +3,7 @@ package com.gym.bodyandmindharmony.mapper;
 import com.gym.bodyandmindharmony.entities.Exercise;
 import com.gym.bodyandmindharmony.models.GymExerciseSessionModel;
 import com.gym.bodyandmindharmony.models.NewGymSessionExerciseModel;
+import com.gym.bodyandmindharmony.models.UpdateGymSessionExerciseModel;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -32,5 +33,17 @@ public class MyGymSessionExerciseMapperImpl implements GymSessionExerciseMapper 
         newExercise.setWeight(model.getWeight());
 
         return newExercise;
+    }
+
+    @Override
+    public Exercise mapToUpdateEntity(UpdateGymSessionExerciseModel model) {
+        final var exercise = new Exercise();
+
+        exercise.setExerciseId(model.getId());
+        exercise.setName(model.getName());
+        exercise.setRepetitions(model.getRepetitions());
+        exercise.setWeight(model.getWeight());
+
+        return exercise;
     }
 }
