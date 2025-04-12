@@ -2,6 +2,7 @@ package com.gym.bodyandmindharmony.service;
 
 import com.gym.bodyandmindharmony.entities.Exercise;
 import com.gym.bodyandmindharmony.entities.GymSession;
+import com.gym.bodyandmindharmony.repositories.ExerciseRepository;
 import com.gym.bodyandmindharmony.repositories.GymSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class GymSessionExerciseImpl implements IGymSessionExercise {
 
     private final GymSessionRepository gymSessionRepository;
+    private final ExerciseRepository exerciseRepository;
 
     @Override
     public List<Exercise> getAllExercises(String gymSessionId) {
@@ -43,5 +45,10 @@ public class GymSessionExerciseImpl implements IGymSessionExercise {
         Optional.ofNullable(updateExercise.getWeight()).ifPresent(exercise::setWeight);
 
         gymSessionRepository.saveAndFlush(gymSession);
+    }
+
+    @Override
+    public void deleteExercise(String exerciseId) {
+        exerciseRepository.deleteById(exerciseId);
     }
 }

@@ -11,4 +11,6 @@ public interface IGymSessionExercise {
     void addExercise(String gymSessionId, Exercise newExercise);
 
     void updateExercise(String gymSessionId, Exercise updateExercise);
+
+    void deleteExercise(String exerciseId);
 }

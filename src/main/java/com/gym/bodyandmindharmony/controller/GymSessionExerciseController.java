@@ -8,6 +8,7 @@ import com.gym.bodyandmindharmony.models.UpdateGymSessionExerciseModel;
 import com.gym.bodyandmindharmony.service.IGymSessionExercise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,12 @@ public class GymSessionExerciseController implements GymSessionExerciseApi {
     public ResponseEntity<Void> updateExercise(@PathVariable String gymSessionId,
                                                @RequestBody UpdateGymSessionExerciseModel updateGymSessionExerciseModel) {
         gymSessionExercise.updateExercise(gymSessionId, mapper.mapToUpdateEntity(updateGymSessionExerciseModel));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{exerciseId}")
+    public ResponseEntity<Void> deleteExercise(@PathVariable String exerciseId) {
+        gymSessionExercise.deleteExercise(exerciseId);
+        return ResponseEntity.noContent().build();
     }
 }
