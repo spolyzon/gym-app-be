@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class GymSessionController implements GymSessionApi {
     @GetMapping
     @Override
     public ResponseEntity<List<GymSessionModel>> retrieveGymSessions(@RequestParam String username) {
-        if (StringUtils.isEmpty(username)) return ResponseEntity.ok(null);
+        if (StringUtils.isEmpty(username)) return ResponseEntity.ok(Collections.emptyList());
 
         final var gymSessions = gymSessionService.getAllGymSessionsByUser(username)
                 .stream()
