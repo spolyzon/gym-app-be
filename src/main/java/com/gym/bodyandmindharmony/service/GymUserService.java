@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class GymUserService {
 
     private final GymUserRepository gymUserRepository;
+    private final JwtService jwtService;
 
     public GymUserModel signup(NewGymUserModel newGymUserModel) {
         log.info("Registering new User: " + newGymUserModel);
@@ -28,8 +29,8 @@ public class GymUserService {
                 .firstName(gymUser.getFirstName())
                 .lastName(gymUser.getLastName())
                 .username(gymUser.getUsername())
-//                .accessToken()
-//                .refreshToken()
+                .accessToken(jwtService.generateAccessToken(gymUser.getUsername()))
+                .refreshToken(jwtService.generateRefreshToken(gymUser.getUsername()))
                 .build();
     }
 
