@@ -1,38 +1,36 @@
 package com.gym.bodyandmindharmony.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private ClerkJwtAuthFilter clerkJwtAuthFilter;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors().and()
-                .csrf().disable()
-                .headers().frameOptions().disable();
-
-        http
-                .authorizeRequests(authorize -> authorize
-                        .antMatchers("/hello").permitAll()
-                .anyRequest().authenticated())
-                .addFilterBefore(clerkJwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+        return http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/api/auth").permitAll()
+                        .anyRequest().authenticated()
+                ).cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .userDetailsService(userDetailsService)
+                .build();
     }
 
     @Bean
