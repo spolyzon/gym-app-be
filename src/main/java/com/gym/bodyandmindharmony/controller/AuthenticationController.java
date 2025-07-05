@@ -21,7 +21,7 @@ public class AuthenticationController {
 
     private final GymUserService gymUserService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<GymUserModel> signup(@RequestBody NewGymUserModel newGymUserModel) {
         return ResponseEntity.status(CREATED).body(gymUserService.signup(newGymUserModel));
     }

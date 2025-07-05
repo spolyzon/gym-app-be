@@ -3,6 +3,7 @@ package com.gym.bodyandmindharmony.exception;
 import com.gym.bodyandmindharmony.models.GymExceptionModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -11,23 +12,36 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
+    public ResponseEntity<GymExceptionModel> handleMalformedRequestException(
+            HttpMessageNotReadableException ex
+    ) {
+        log.error(ex.getMessage());
+        return ResponseEntity
+                .badRequest()
+                .body(GymExceptionModel.builder()
+                        .code(4001)
+                        .category("BAD_REQUEST")
+                        .message(ex.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<GymExceptionModel> handleDuplicateUsernameException(DuplicateUsernameException ex) {
         log.error(ex.getMessage());
         return ResponseEntity
-                .ok()
+                .badRequest()
                 .body(GymExceptionModel.builder()
                         .code(ex.getCode())
-                        .category("SERVER_ERROR")
+                        .category(ex.getCategory())
                         .message(ex.getMessage())
-                        .build()
-                );
+                        .build());
     }
 
     @ExceptionHandler
     public ResponseEntity<GymExceptionModel> handleException(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity
-                .ok()
+                .internalServerError()
                 .body(GymExceptionModel.builder()
                         .code(500)
                         .category("SERVER_ERROR")
