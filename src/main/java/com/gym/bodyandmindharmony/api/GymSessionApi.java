@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GymSessionApi {
 
-    ResponseEntity<List<GymSessionModel>> retrieveGymSessions(String username);
+    ResponseEntity<List<GymSessionModel>> retrieveAllGymSessions();
 
-    ResponseEntity<GymSessionModel> createNewGymSession(NewGymSessionModel newGymSessionModel, String username);
+    ResponseEntity<GymSessionModel> createNewGymSession(NewGymSessionModel newGymSessionModel);
 }
