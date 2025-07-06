@@ -7,6 +7,8 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -30,6 +32,18 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage());
         return ResponseEntity
                 .badRequest()
+                .body(GymExceptionModel.builder()
+                        .code(ex.getCode())
+                        .category(ex.getCategory())
+                        .message(ex.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<GymExceptionModel> handleUserNotFoundException(UserNotFoundException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity
+                .status(NOT_FOUND)
                 .body(GymExceptionModel.builder()
                         .code(ex.getCode())
                         .category(ex.getCategory())

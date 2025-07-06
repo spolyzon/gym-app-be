@@ -1,5 +1,6 @@
 package com.gym.bodyandmindharmony.controller;
 
+import com.gym.bodyandmindharmony.models.GymUserLoginModel;
 import com.gym.bodyandmindharmony.models.GymUserModel;
 import com.gym.bodyandmindharmony.models.NewGymUserModel;
 import com.gym.bodyandmindharmony.service.GymUserService;
@@ -24,5 +25,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<GymUserModel> signup(@RequestBody NewGymUserModel newGymUserModel) {
         return ResponseEntity.status(CREATED).body(gymUserService.signup(newGymUserModel));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<GymUserModel> login(@RequestBody GymUserLoginModel gymUserLoginModel) {
+        return ResponseEntity.ok(gymUserService.login(gymUserLoginModel));
     }
 }

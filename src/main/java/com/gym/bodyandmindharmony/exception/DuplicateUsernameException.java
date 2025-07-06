@@ -7,7 +7,16 @@ public class DuplicateUsernameException extends GymException {
     private static final String MESSAGE = "Username already exists";
 
     public DuplicateUsernameException() {
-        super(MESSAGE, CODE, CATEGORY);
+        super(MESSAGE);
     }
 
+    @Override
+    public int getCode() {
+        return CODE;
+    }
+
+    @Override
+    public String getCategory() {
+        return CATEGORY;
+    }
 }
