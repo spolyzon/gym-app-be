@@ -1,5 +1,7 @@
 package com.gym.bodyandmindharmony.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -50,6 +52,13 @@ public class JwtService {
                 .setIssuer(ISSUER)
                 .signWith(secretKey)
                 .compact();
+    }
+
+    public Jws<Claims> getClaims(String jwtToken) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(jwtToken);
     }
 
 }
