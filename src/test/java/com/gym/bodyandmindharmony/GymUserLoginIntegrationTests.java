@@ -1,5 +1,6 @@
 package com.gym.bodyandmindharmony;
 
+import lombok.extern.java.Log;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class GymUserRegistrationIntegrationTests {
+public class GymUserLoginIntegrationTests {
 
     private static final String REGISTRATION_URL = "/api/auth/register";
+    private static final String LOGIN_URL = "/api/auth/login";
     private static final String EXCEPTION_RESPONSE_CODE = "$.code";
     private static final String EXCEPTION_RESPONSE_CATEGORY = "$.category";
     private static final String EXCEPTION_RESPONSE_MESSAGE = "$.message";
@@ -51,65 +53,42 @@ public class GymUserRegistrationIntegrationTests {
     void theOneWhereFirstNameIsNull() throws Exception {
         final var request = """
                 {
-                    "lastName": "polyzonis",
-                    "username": "test"
                 }
                 """;
         mockMvc
-                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(request))
+                .perform(post(LOGIN_URL).contentType(MediaType.APPLICATION_JSON).content(request))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath(EXCEPTION_RESPONSE_CODE).value(4001))
                 .andExpect(jsonPath(EXCEPTION_RESPONSE_CATEGORY).value("BAD_REQUEST"))
                 .andExpect(jsonPath(EXCEPTION_RESPONSE_MESSAGE)
-                        .value("JSON parse error: Missing required creator property 'firstName' (index 0)"))
+                        .value("JSON parse error: Missing required creator property 'username' (index 0)"))
                 .andDo(print());
     }
 
     @Test
     @Order(0)
-    void theOneWhereLastNameIsNull() throws Exception {
-        final var request = """
+    void theOneWhereWeTryToLoginWithNotExistingUsername() throws Exception {
+        final var loginRequest = """
                 {
-                    "firstName": "spyros",
                     "username": "test"
                 }
                 """;
         mockMvc
-                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(request))
-                .andExpect(status().isBadRequest())
+                .perform(post(LOGIN_URL).contentType(MediaType.APPLICATION_JSON).content(loginRequest))
+                .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_CODE).value(4001))
+                .andExpect(jsonPath(EXCEPTION_RESPONSE_CODE).value(4040))
                 .andExpect(jsonPath(EXCEPTION_RESPONSE_CATEGORY).value("BAD_REQUEST"))
                 .andExpect(jsonPath(EXCEPTION_RESPONSE_MESSAGE)
-                        .value("JSON parse error: Missing required creator property 'lastName' (index 1)"))
-                .andDo(print());
-    }
-
-    @Test
-    @Order(0)
-    void theOneWhereUsernameIsNull() throws Exception {
-        final var request = """
-                {
-                    "firstName": "spyros",
-                    "lastName": "polyzonis"
-                }
-                """;
-        mockMvc
-                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(request))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_CODE).value(4001))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_CATEGORY).value("BAD_REQUEST"))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_MESSAGE)
-                        .value("JSON parse error: Missing required creator property 'username' (index 2)"))
+                        .value("User with username test does not exist"))
                 .andDo(print());
     }
 
     @Test
     @Order(1)
-    void theOneWhereWeSuccessfullyCreateNewGymUser() throws Exception {
-        final var request = """
+    void theOneWhereWeSuccessfullyLogin() throws Exception {
+        final var registrationRequest = """
                 {
                     "firstName": "spyros",
                     "lastName": "polyzonis",
@@ -117,8 +96,18 @@ public class GymUserRegistrationIntegrationTests {
                 }
                 """;
         mockMvc
-                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(request))
+                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(registrationRequest))
                 .andExpect(status().isCreated())
+                .andDo(print());
+
+        final var loginRequest = """
+                {
+                    "username": "test"
+                }
+                """;
+        mockMvc
+                .perform(post(LOGIN_URL).contentType(MediaType.APPLICATION_JSON).content(loginRequest))
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath(FIRST_NAME).value("spyros"))
                 .andExpect(jsonPath(LAST_NAME).value("polyzonis"))
@@ -128,23 +117,4 @@ public class GymUserRegistrationIntegrationTests {
                 .andDo(print());
     }
 
-    @Test
-    @Order(2)
-    void theOneWhereWeTryToRegisterAUserWithAnExistingUsername() throws Exception {
-        final var request = """
-                {
-                    "firstName": "test",
-                    "lastName": "test",
-                    "username": "test"
-                }
-                """;
-        mockMvc
-                .perform(post(REGISTRATION_URL).contentType(MediaType.APPLICATION_JSON).content(request))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_CODE).value(4000))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_CATEGORY).value("BAD_REQUEST"))
-                .andExpect(jsonPath(EXCEPTION_RESPONSE_MESSAGE).value("Username already exists"))
-                .andDo(print());
-    }
 }
