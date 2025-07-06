@@ -8,6 +8,7 @@ import java.util.List;
 public interface IGymSession {
 
     List<GymSession> getAllGymSessions();
+    List<GymSession> getAllGymSessionsByUser(String username);
 
-    GymSession createNewGymSession(NewGymSessionModel newGymSessionModel);
+    GymSession createNewGymSession(NewGymSessionModel newGymSessionModel, String username);
 }

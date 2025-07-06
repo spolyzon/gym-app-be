@@ -9,6 +9,6 @@ public class MyGymSessionMapperImpl implements GymSessionMapper {
 
     @Override
     public GymSessionModel mapToModel(GymSession entity) {
-        return new GymSessionModel(entity.getId(), entity.getFinishTime().toLocalDate(), "default");
+        return new GymSessionModel(entity.getId(), entity.getType(), entity.getStartTime(), entity.getFinishTime());
     }
 }
