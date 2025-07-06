@@ -1,10 +1,10 @@
 package com.gym.bodyandmindharmony.exception;
 
-public class DuplicateUsernameException extends GymException {
+public class JwtExpiredException extends GymException {
 
-    private static final ErrorEnum ERROR = ErrorEnum.DUPLICATE_USERNAME_ERROR;
+    private static final ErrorEnum ERROR = ErrorEnum.EXPIRED_JWT_ERROR;
 
-    public DuplicateUsernameException() {
+    public JwtExpiredException() {
         super(ERROR.getMessage());
     }
 

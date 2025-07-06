@@ -1,5 +1,6 @@
 package com.gym.bodyandmindharmony.config;
 
+import com.gym.bodyandmindharmony.exception.GymAccessDeniedHandler;
 import com.gym.bodyandmindharmony.exception.GymAuthenticationEntryPoint;
 import com.gym.bodyandmindharmony.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter authenticationFilter;
     private final GymAuthenticationEntryPoint gymAuthenticationEntryPoint;
+    private final GymAccessDeniedHandler gymAccessDeniedHandler;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
@@ -44,7 +46,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAfter(authenticationFilter, ExceptionTranslationFilter.class)
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(gymAuthenticationEntryPoint))
+                .exceptionHandling(ex ->
+                        ex.authenticationEntryPoint(gymAuthenticationEntryPoint).accessDeniedHandler(gymAccessDeniedHandler))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .userDetailsService(userDetailsService)
                 .build();

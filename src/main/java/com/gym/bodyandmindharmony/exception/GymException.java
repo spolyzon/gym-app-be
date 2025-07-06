@@ -5,13 +5,24 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public abstract class GymException extends RuntimeException {
+public class GymException extends RuntimeException {
+
+    private ErrorEnum errorEnum;
 
     public GymException(String message) {
         super(message);
     }
 
-    public abstract int getCode();
+    public GymException(ErrorEnum errorEnum) {
+        super(errorEnum.getMessage());
+        this.errorEnum = errorEnum;
+    }
 
-    public abstract String getCategory();
+    public int getCode() {
+        return errorEnum.getCode();
+    }
+
+    public String getCategory() {
+        return errorEnum.getCategory();
+    }
 }

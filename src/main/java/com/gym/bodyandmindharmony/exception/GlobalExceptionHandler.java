@@ -52,6 +52,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<GymExceptionModel> handleGymException(GymException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity
+                .badRequest()
+                .body(GymExceptionModel.builder()
+                        .code(ex.getCode())
+                        .category(ex.getCategory())
+                        .message(ex.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<GymExceptionModel> handleException(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity

@@ -2,21 +2,19 @@ package com.gym.bodyandmindharmony.exception;
 
 public class UserNotFoundException extends GymException {
 
-    private static final int CODE = 4040;
-    private static final String CATEGORY = "BAD_REQUEST";
-    private static final String MESSAGE = "User with username %s does not exist";
+    private static final ErrorEnum ERROR = ErrorEnum.USER_NOT_FOUND_ERROR;
 
     public UserNotFoundException(String username) {
-        super(MESSAGE.formatted(username));
+        super(ERROR.getMessage().formatted(username));
     }
 
     @Override
     public int getCode() {
-        return CODE;
+        return ERROR.getCode();
     }
 
     @Override
     public String getCategory() {
-        return CATEGORY;
+        return ERROR.getCategory();
     }
 }
